@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>Bienvenue sur la page À Propos</h1>
+        <p>Voici votre page</p>
+        <img src="{{ asset('images/book.jpg') }}" alt="Image de livre" class="img-fluid">
+    </div>
+    <div class="text-center mt-4">
+        <a href="{{ path('app_pages') }}" class="btn btn-info">Retour à l'accueil</a>
+    </div>
+{% endblock %}

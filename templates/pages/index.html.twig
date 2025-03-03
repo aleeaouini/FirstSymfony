@@ -1,0 +1,83 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    <section class="hero-section py-5 bg-light">
+        <div class="container-fluid px-4 px-lg-5">
+            <div class="row gx-5">
+                <div class="col-lg-6">
+                    <h1 class="display-4 fw-bold mb-4">Bienvenue sur notre site</h1>
+                    
+                    <p>Il est actuellement <strong>{{ 'now' | date('H:i A') }}</strong></p>
+                    
+                    <p class="lead mb-5">
+                        Nous sommes ravis de vous accueillir sur notre site où vous pouvez découvrir une 
+                        large sélection de livres dans différents genres.
+                    </p>
+                    
+                    <!-- Boutons -->
+                    <div class="d-flex gap-3 mb-5">
+                        <a href="{{ path('app_about') }}" class="btn btn-warning px-4 py-2">
+                            <i class="fas fa-info-circle me-2"></i> À propos
+                        </a>
+                        <a href="{{ path('app_voir') }}" class="btn btn-warning px-4 py-2">
+                            <i class="fas fa-book-open me-2"></i> Découvrir
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6 mt-4 mt-lg-0 d-flex align-items-center">
+                    <div class="book-carousel w-100">
+                        <div class="row g-4">
+
+
+                            {% for i in 1..5 %}
+                                <div class="col-6 col-md-4">
+                                    <div class="book-item shadow-sm rounded overflow-hidden">
+                                        <img src="{{ asset('images/book' ~ i ~ '.jpg') }}"
+                                             alt="Couverture du livre {{ i }}"
+                                             class="img-fluid w-100">
+                                    </div>
+                                </div>
+                            {% endfor %}
+
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Ajoutons une section supplémentaire pour plus de contenu -->
+    <section class="featured-section py-5">
+        <div class="container-fluid px-4 px-lg-5">
+            <h2 class="text-center mb-5">Livres populaires</h2>
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+                {% for i in 1..4 %}
+                    <div class="col">
+
+
+
+                        <div class="card h-100 border-0 shadow-sm">
+                            <img src="{{ asset('images/book' ~ i ~ '.jpg') }}" class="card-img-top" alt="Livre {{ i }}">
+                            <div class="card-body">
+                                <h5 class="card-title">Titre du livre {{ i }}</h5>
+                                <p class="card-text">Description courte du livre {{ i }}.</p>
+                                <a href="#" class="btn btn-sm btn-outline-warning">Plus d'infos</a>
+                            </div>
+                        </div>
+
+
+
+
+
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+{% endblock %}

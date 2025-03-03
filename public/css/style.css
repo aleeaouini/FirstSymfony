@@ -1,0 +1,49 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #fcfcfc;
+}
+
+.btn-warning {
+    background-color: #ff9800;
+    border-color: #ff9800;
+}
+
+.btn-warning:hover {
+    background-color: #e68a00;
+    border-color: #e68a00;
+}
+
+.btn-outline-warning {
+    color: #ff9800;
+    border-color: #ff9800;
+}
+
+.btn-outline-warning:hover {
+    background-color: #ff9800;
+    color: white;
+}
+
+.text-warning {
+    color: #ff9800 !important;
+}
+
+.book-item {
+    transition: transform 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.book-item:hover {
+    transform: translateY(-5px);
+}
+
+.footer a:hover {
+    text-decoration: underline !important;
+}
+
+.hero-section {
+    background-color: #f8f9fa;
+}
+
+.featured-section {
+    background-color: white;
+}
