@@ -1,23 +1,106 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Register{% endblock %}
+{% block title %}Inscription{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .registration-container {
+            background-color: #f8f9fa;
+            padding: 3rem 0;
+        }
+        .registration-card {
+            background-color: #fff;
+            border-radius: 0.5rem;
+            border: none;
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+        }
+        .registration-header {
+            background-color: #fff;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            padding: 1.5rem;
+        }
+        .registration-body {
+            padding: 2rem;
+        }
+        .btn-warning {
+            font-weight: 500;
+        }
+        .book-decoration {
+            max-width: 80%;
+            margin: 0 auto;
+            border-radius: 0.25rem;
+            overflow: hidden;
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+        }
+    </style>
+{% endblock %}
 
 {% block body %}
-    {% for flash_error in app.flashes('verify_email_error') %}
-        <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
-    {% endfor %}
-
-    <h1>Register</h1>
-
-    {{ form_errors(registrationForm) }}
-
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
-
-        <button type="submit" class="btn">Register</button>
-    {{ form_end(registrationForm) }}
+    <section class="registration-container">
+        <div class="container-fluid px-4 px-lg-5">
+            <div class="row gx-5 justify-content-center">
+                <div class="col-lg-8">
+                    <div class="card registration-card">
+                        <div class="registration-header">
+                            <h1 class="fw-bold text-center mb-2">Créez votre compte</h1>
+                            <p class="text-center text-muted mb-0">Rejoignez notre communauté de lecteurs dès aujourd'hui</p>
+                        </div>
+                        
+                        <div class="registration-body">
+                            {% for flash_error in app.flashes('verify_email_error') %}
+                                <div class="alert alert-danger alert-dismissible fade show mb-4" role="alert">
+                                    <i class="fas fa-exclamation-circle me-2"></i>{{ flash_error }}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            {% endfor %}
+                            
+                            <div class="row">
+                                <div class="col-md-6 mb-4 mb-md-0">
+                                    {{ form_errors(registrationForm) }}
+                                    
+                                    {{ form_start(registrationForm) }}
+                                        <div class="mb-4">
+                                            {{ form_label(registrationForm.email, 'Adresse email', {'label_attr': {'class': 'form-label fw-bold'}}) }}
+                                            {{ form_widget(registrationForm.email, {'attr': {'class': 'form-control', 'placeholder': 'Entrez votre adresse email'}}) }}
+                                            <div class="form-text">Nous ne partagerons jamais votre email.</div>
+                                            {{ form_errors(registrationForm.email) }}
+                                        </div>
+                                        
+                                        <div class="mb-4">
+                                            {{ form_label(registrationForm.plainPassword, 'Mot de passe', {'label_attr': {'class': 'form-label fw-bold'}}) }}
+                                            {{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'form-control', 'placeholder': 'Choisissez un mot de passe'}}) }}
+                                            {{ form_errors(registrationForm.plainPassword) }}
+                                        </div>
+                                        
+                                        <div class="mb-4 form-check">
+                                            {{ form_widget(registrationForm.agreeTerms, {'attr': {'class': 'form-check-input'}}) }}
+                                            {{ form_label(registrationForm.agreeTerms, 'J\'accepte les conditions d\'utilisation', {'label_attr': {'class': 'form-check-label'}}) }}
+                                            {{ form_errors(registrationForm.agreeTerms) }}
+                                        </div>
+                                        
+                                        <div class="d-grid gap-2">
+                                            <button type="submit" class="btn btn-warning py-2">
+                                                <i class="fas fa-user-plus me-2"></i>S'inscrire
+                                            </button>
+                                        </div>
+                                        
+                                        <div class="text-center mt-4">
+                                            <p class="mb-0">Déjà un compte? <a href="{{ path('app_login') }}" class="text-warning fw-bold">Connectez-vous</a></p>
+                                        </div>
+                                    {{ form_end(registrationForm) }}
+                                </div>
+                                
+                                <div class="col-md-6 d-flex align-items-center justify-content-center">
+                                    <div class="book-decoration">
+                                        <img src="{{ asset('images/book.jpg') }}" alt="Livre" class="img-fluid">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 {% endblock %}

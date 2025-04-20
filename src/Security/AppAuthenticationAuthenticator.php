@@ -1,5 +1,5 @@
 <?php
-
+/////
 namespace App\Security;
 
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -28,15 +28,18 @@ class AppAuthenticationAuthenticator extends AbstractLoginFormAuthenticator
 
     public function authenticate(Request $request): Passport
     {
-        $email = $request->getPayload()->getString('email');
+        $email = $request->request->get('email');
+        $password = $request->request->get('password');
+        $csrfToken = $request->request->get('_csrf_token');
 
+        // Stocke l'email dans la session pour la dernière tentative de login
         $request->getSession()->set(SecurityRequestAttributes::LAST_USERNAME, $email);
 
         return new Passport(
             new UserBadge($email),
-            new PasswordCredentials($request->getPayload()->getString('password')),
+            new PasswordCredentials($password),
             [
-                new CsrfTokenBadge('authenticate', $request->getPayload()->getString('_csrf_token')),
+                new CsrfTokenBadge('authenticate', $csrfToken),
                 new RememberMeBadge(),
             ]
         );
@@ -44,13 +47,13 @@ class AppAuthenticationAuthenticator extends AbstractLoginFormAuthenticator
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
+        // Vérifie si une cible est présente dans la session (ex: page précédente)
         if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
             return new RedirectResponse($targetPath);
         }
 
-        // For example:
-        // return new RedirectResponse($this->urlGenerator->generate('some_route'));
-        throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
+        // Redirige vers la page d'accueil (ou toute autre page désirée)
+        return new RedirectResponse($this->urlGenerator->generate('app_pages'));
     }
 
     protected function getLoginUrl(Request $request): string
