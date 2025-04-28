@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détails du livre{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow-lg border-light p-4 rounded">
+                    <!-- Image du livre -->
+                    <div class="text-center mb-4">
+                        <img 
+                            src="{{ asset('images/covers/' ~ book.coverImage) }}" 
+                            alt="{{ book.title }}" 
+                            class="img-fluid rounded"
+                            style="max-height: 500px; object-fit: cover; border-radius: 15px;"
+                        >
+                    </div>
+
+                    <!-- Titre du livre -->
+                    <h1 class="text-center mb-3 text-dark font-weight-bold">{{ book.title }}</h1>
+
+                    <!-- Description du livre -->
+                    <p class="text-muted mb-4">{{ book.description }}</p>
+
+                    <!-- Auteur du livre -->
+                    <p class="font-italic text-secondary mb-3"><strong>Auteur :</strong> {{ book.author }}</p>
+
+                    <!-- Prix du livre -->
+                    <p class="h4 mt-4 text-success"><strong>Prix :</strong> {{ book.price }} €</p>
+
+                    <!-- Bouton retour à la liste -->
+                    <div class="text-center mt-4">
+                        <a href="{{ path('app_book') }}" class="btn btn-warning btn-lg px-5 py-2">Retour à la liste</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
