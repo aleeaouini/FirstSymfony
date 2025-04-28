@@ -20,7 +20,7 @@ final class Version20250419161436 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE user ADD COLUMN is_verified BOOLEAN NOT NULL');
+        //$this->addSql('ALTER TABLE user ADD COLUMN is_verified BOOLEAN NOT NULL');
     }
 
     public function down(Schema $schema): void

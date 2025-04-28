@@ -1,0 +1,129 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon Panier{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+{% endblock %}
+
+{% block body %}
+    <section class="cart-container">
+        <div class="container-fluid px-4 px-lg-5">
+            <div class="row gx-5 justify-content-center">
+                <div class="col-lg-10">
+                    <div class="card cart-card">
+                        <div class="cart-header">
+                            <h1 class="fw-bold text-center mb-2">Mon Panier</h1>
+                            <p class="text-center text-muted mb-0">Vos articles sélectionnés</p>
+                        </div>
+                        
+                        <div class="cart-body">
+                            {% if cartItems|length > 0 %}
+                                <div class="table-responsive">
+                                    <table class="table cart-table">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col" width="50%">Livre</th>
+                                                <th scope="col" class="text-center">Prix unitaire</th>
+                                                <th scope="col" class="text-center">Quantité</th>
+                                                <th scope="col" class="text-center">Total</th>
+                                                <th scope="col" class="text-center">Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for item in cartItems %}
+                                                <tr class="cart-item">
+                                                    <td>
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="cart-item-image me-3">
+                                                                {% if item.book.coverImage %}
+                                                                    <img src="{{ asset('images/covers/' ~ item.book.coverImage) }}" alt="{{ item.book.title }}" class="img-fluid">
+                                                                {% else %}
+                                                                    <img src="{{ asset('images/default-book.jpg') }}" alt="Couverture par défaut" class="img-fluid">
+                                                                {% endif %}
+                                                            </div>
+                                                            <div>
+                                                                <h5 class="cart-item-title">{{ item.book.title }}</h5>
+                                                                <p class="cart-item-author">{{ item.book.author }}</p>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td class="text-center align-middle">{{ item.book.price }} €</td>
+                                                    <td class="text-center align-middle">
+                                                        <div class="quantity-control">
+                                                            <!-- Dans cart/index.html.twig -->
+<a href="{{ path('app_decrease_quantity', {'id': item.book.id}) }}" class="quantity-btn">-</a>
+
+                                                            <span class="quantity">{{ item.quantity }}</span>
+<a href="{{ path('app_increase_quantity', {'id': item.book.id}) }}" class="quantity-btn">+</a>
+                                                            
+                                                        </div>
+                                                    </td>
+                                                    <td class="text-center align-middle fw-bold">{{ (item.quantity * item.book.price)|number_format(2, ',', ' ') }} €</td>
+                                                    <td class="text-center align-middle">
+                                                        <a href="{{ path('app_remove_from_cart', {'id': item.book.id}) }}" class="btn btn-sm btn-outline-danger">
+                                                            <i class="fas fa-trash"></i>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                                
+                                <div class="cart-summary">
+                                    <div class="row">
+                                        <div class="col-md-6 offset-md-6">
+                                            <div class="card summary-card">
+                                                <div class="card-body">
+                                                    <h5 class="card-title mb-3">Récapitulatif</h5>
+                                                    {% set total = 0 %}
+                                                    {% for item in cartItems %}
+                                                        {% set total = total + (item.quantity * item.book.price) %}
+                                                    {% endfor %}
+                                                    <div class="d-flex justify-content-between mb-2">
+                                                        <span>Sous-total:</span>
+                                                        <span>{{ total|number_format(2, ',', ' ') }} €</span>
+                                                    </div>
+                                                    <div class="d-flex justify-content-between mb-2">
+                                                        <span>Frais de livraison:</span>
+                                                        <span>5,00 €</span>
+                                                    </div>
+                                                    <hr>
+                                                    <div class="d-flex justify-content-between mb-3 fw-bold">
+                                                        <span>Total:</span>
+                                                        <span class="text-warning">{{ (total + 5)|number_format(2, ',', ' ') }} €</span>
+                                                    </div>
+                                                    <div class="d-grid gap-2">
+                                                       {# <a href="{{ path('app_checkout') }}" class="btn btn-warning"> #}
+                                                            <i class="fas fa-credit-card me-2"></i>Procéder au paiement
+                                                        </a>
+                                                        <a href="{{ path('app_book') }}" class="btn btn-outline-secondary">
+                                                            <i class="fas fa-arrow-left me-2"></i>Continuer mes achats
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% else %}
+                                <div class="empty-cart">
+                                    <div class="text-center py-5">
+                                        <i class="fas fa-shopping-cart fa-4x mb-3 text-muted"></i>
+                                        <h4>Votre panier est vide</h4>
+                                        <p class="text-muted">Découvrez notre sélection de livres et commencez vos achats.</p>
+                                        <a href="{{ path('app_book') }}" class="btn btn-warning mt-3">
+                                            <i class="fas fa-book me-2"></i>Parcourir le catalogue
+                                        </a>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

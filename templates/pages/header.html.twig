@@ -4,10 +4,15 @@
             <a href="{{ path('app_pages') }}" class="text-warning text-decoration-none fs-4 fw-bold">
                 <i class="fas fa-book me-2"></i>BookSite
             </a>
-            
+
             <div class="d-flex align-items-center gap-2">
                 <a href="{{ path('app_pages') }}" class="btn btn-sm btn-warning px-3">Accueil</a>
                 <a href="{{ path('app_voir') }}" class="btn btn-sm btn-warning px-3">Découvrir</a>
+                
+                {# 👇 Les deux nouveaux boutons ici #}
+                <a href="{{ path('app_book') }}" class="btn btn-sm btn-warning px-3">Books</a>
+                <a href="{{ path('app_cart') }}" class="btn btn-sm btn-warning px-3">Panier</a>
+                
                 <div class="ms-3">
                     <a href="{{ path('app_register') }}" class="btn btn-sm btn-outline-warning me-2">S'inscrire</a>
                     <a href="{{ path('app_login') }}" class="btn btn-sm btn-outline-warning">Se connecter</a>

@@ -1,0 +1,69 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Catalogue de Livres{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+{% endblock %}
+
+{% block body %}
+<section class="book-list-container">
+    <div class="container-fluid px-4 px-lg-5">
+        <div class="row gx-5 justify-content-center">
+            <div class="col-12">
+                <div class="book-header">
+                    <h1 class="book-list-title fw-bold text-center mb-4">Notre Catalogue de Livres</h1>
+                    <p class="text-center text-muted mb-5">Bienvenue sur BookSite, votre destination idéale pour découvrir des livres captivants, inspirants et pour tous les goûts. Plongez dans notre collection soigneusement sélectionnée.</p>
+                </div>
+
+                {% if books|length > 0 %}
+                    <div class="book-grid">
+                        {% for book in books %}
+                            <div class="book-item">
+                                {% if book.coverImage %}
+                                    <div class="book-cover mb-3">
+                                        <img 
+                                            src="{{ asset('images/covers/' ~ book.coverImage) }}" 
+                                            alt="{{ book.title }}" 
+                                            class="img-fluid book-image"
+                                        >
+                                    </div>
+                                {% endif %}
+
+                                <h5 class="book-title">{{ book.title }}</h5>
+                                <p class="book-author">
+                                    <i class="fas fa-user-edit me-2"></i>{{ book.author }}
+                                </p>
+                                <p class="book-price">
+                                    <i class="fas fa-tag me-2"></i>
+                                    <span class="fw-bold text-warning">{{ book.price }} €</span>
+                                </p>
+                                <p class="book-description">
+                                    {{ book.description|length > 100 
+                                        ? book.description|slice(0, 100) ~ '...' 
+                                        : book.description 
+                                    }}
+                                </p>
+                                <div class="d-grid gap-2">
+                                    <a href="{{ path('app_add_to_cart', {'id': book.id}) }}" class="btn btn-warning">
+                                        <i class="fas fa-shopping-cart me-2"></i>Ajouter au panier
+                                    </a>
+                                    <a href="{{ path('app_book_details', {'id': book.id}) }}" class="btn btn-outline-warning">
+                                        <i class="fas fa-info-circle me-2"></i>Détails
+                                    </a>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="no-books-message text-center">
+                        <i class="fas fa-book-open fa-3x mb-3"></i>
+                        <p>Aucun livre disponible pour le moment.</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
